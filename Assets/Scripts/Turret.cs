@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
+    [Header("Attributes")]
     public float Range = 8f;
+    public float AttackSpeed = 1f;
+    public int Damage = 1;
     public float TurnSpeed = 10f;
+    [Header("Unity References")]
     public string EnemyTag = "Enemy";
     public Transform RotatePart;
 
     private Transform target;
-    private float targetUpdateTime = 0.5f;
+    private float targetUpdateDeltaTimeSeconds = 0.5f;
+    private float attackCountdown = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("UpdateTarget", 0f, targetUpdateTime);
+        InvokeRepeating("UpdateTarget", 0f, targetUpdateDeltaTimeSeconds);
     }
 
     // Update is called once per frame
@@ -22,6 +28,27 @@ public class Turret : MonoBehaviour
     {
         if (target == null) return;
 
+        RotateTowardTarget();
+
+        if (attackCountdown <= 0f)
+        {
+            AttackTarget();
+            attackCountdown = 1f * AttackSpeed;
+        }
+
+        attackCountdown -= Time.deltaTime;
+    }
+
+    private void AttackTarget()
+    {
+        var enemyObject = target.gameObject;
+        Enemy enemy = enemyObject.GetComponent<Enemy>();
+
+        enemy.ApplyDamage(Damage);
+    }
+
+    private void RotateTowardTarget()
+    {
         // Find vector that points in direction of target
         var direction = target.position - transform.position;
         // Calculate the Quaternion needed to rotate in that direction

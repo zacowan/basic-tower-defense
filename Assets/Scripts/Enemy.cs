@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Attributes")]
     public float Speed = 10f;
+    [Header("Unity References")]
     public string WaypointTag = "Waypoint";
 
     private Transform target;
-    private int wavepointIndex = 0;
+    private int waypointIndex = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        target = Waypoints.points[wavepointIndex];
+        target = Waypoints.points[waypointIndex];
     }
 
     // Update is called once per frame
@@ -23,6 +25,11 @@ public class Enemy : MonoBehaviour
         // Ignore y direction
         direction.Scale(new Vector3(1, 0, 1));
         transform.Translate(direction.normalized * (Speed * Time.deltaTime), Space.World);
+    }
+
+    public void ApplyDamage(int damage)
+    {
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,15 +42,15 @@ public class Enemy : MonoBehaviour
         IncrementWaypointTarget();
     }
 
-    void IncrementWaypointTarget()
+    private void IncrementWaypointTarget()
     {
-        if (wavepointIndex >= Waypoints.points.Length - 1)
+        if (waypointIndex >= Waypoints.points.Length - 1)
         {
             Destroy(gameObject);
             return;
         }
 
-        wavepointIndex += 1;
-        target = Waypoints.points[wavepointIndex];
+        waypointIndex += 1;
+        target = Waypoints.points[waypointIndex];
     }
 }

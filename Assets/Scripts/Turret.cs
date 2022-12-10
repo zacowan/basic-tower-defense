@@ -5,7 +5,7 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     [Header("Attributes")]
-    public float Range = 8f;
+    public float Range = 15f;
     public float AttackSpeed = 1f;
     public int Damage = 1;
     public float TurnSpeed = 10f;
@@ -14,7 +14,7 @@ public class Turret : MonoBehaviour
     public Transform RotatePart;
 
     private Transform target;
-    private float targetUpdateDeltaTimeSeconds = 0.5f;
+    private float targetUpdateDeltaTimeSeconds = 0.1f;
     private float attackCountdown = 0f;
 
     // Start is called before the first frame update

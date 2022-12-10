@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed = 10f;
+    public float Speed = 10f;
+    public string WaypointTag = "Waypoint";
 
     private Transform target;
     private int wavepointIndex = 0;
@@ -19,13 +20,14 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Vector3 direction = target.position - transform.position;
+        // Ignore y direction
         direction.Scale(new Vector3(1, 0, 1));
-        transform.Translate(direction.normalized * (speed * Time.deltaTime), Space.World);
+        transform.Translate(direction.normalized * (Speed * Time.deltaTime), Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "Waypoint")
+        if (other.tag != WaypointTag)
         {
             return;
         }

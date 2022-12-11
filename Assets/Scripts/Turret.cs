@@ -11,36 +11,44 @@ public class Turret : MonoBehaviour
     public float TurnSpeed = 10f;
     [Header("Unity References")]
     public string EnemyTag = "Enemy";
+    public string AttackAnimationState = "Attack";
     public Transform RotatePart;
 
     private Transform target;
     private float targetUpdateDeltaTimeSeconds = 0.1f;
     private float attackCountdown = 0f;
+    private Animator animatorReference;
 
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("UpdateTarget", 0f, targetUpdateDeltaTimeSeconds);
+        animatorReference = gameObject.GetComponent<Animator>();
+        // InvokeRepeating("UpdateTarget", 0f, targetUpdateDeltaTimeSeconds);
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateTarget();
+
         if (target == null) return;
 
         RotateTowardTarget();
 
         if (attackCountdown <= 0f)
         {
-            AttackTarget();
+            animatorReference.Play(AttackAnimationState);
             attackCountdown = 1f * AttackSpeed;
         }
 
         attackCountdown -= Time.deltaTime;
     }
 
-    private void AttackTarget()
+    // Called based on animation keyframe events.
+    private void AttackTargetEnemy()
     {
+        if (!target) return;
+
         var enemyObject = target.gameObject;
         Enemy enemy = enemyObject.GetComponent<Enemy>();
 

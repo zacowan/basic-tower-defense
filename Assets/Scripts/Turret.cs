@@ -15,7 +15,6 @@ public class Turret : MonoBehaviour
     public Transform RotatePart;
 
     private Transform target;
-    private float targetUpdateDeltaTimeSeconds = 0.1f;
     private float attackCountdown = 0f;
     private Animator animatorReference;
 
@@ -23,7 +22,6 @@ public class Turret : MonoBehaviour
     void Start()
     {
         animatorReference = gameObject.GetComponent<Animator>();
-        // InvokeRepeating("UpdateTarget", 0f, targetUpdateDeltaTimeSeconds);
     }
 
     // Update is called once per frame

@@ -5,9 +5,9 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Header("Attributes")]
-    public float Speed = 10f;
+    public float Speed;
     [Header("Unity References")]
-    public string WaypointTag = "Waypoint";
+    public string WaypointTag;
 
     private Transform target;
     private int waypointIndex = 0;

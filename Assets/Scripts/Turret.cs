@@ -5,13 +5,14 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     [Header("Attributes")]
-    public float Range = 15f;
-    public float AttackSpeed = 1f;
-    public int Damage = 1;
-    public float TurnSpeed = 10f;
+    public float Range;
+    public float AttackSpeed;
+    public int Damage;
+    public float TurnSpeed;
     [Header("Unity References")]
-    public string EnemyTag = "Enemy";
-    public string AttackAnimationState = "Attack";
+    public string EnemyTag;
+    public string AnimationAttackStateName;
+    public string AnimationIdleStateName;
     public Transform RotatePart;
 
     private Transform target;
@@ -35,11 +36,14 @@ public class Turret : MonoBehaviour
 
         if (attackCountdown <= 0f)
         {
-            animatorReference.Play(AttackAnimationState);
+            animatorReference.Play(AnimationAttackStateName);
             attackCountdown = 1f * AttackSpeed;
         }
 
-        attackCountdown -= Time.deltaTime;
+        if (animatorReference.GetCurrentAnimatorStateInfo(0).IsName(AnimationIdleStateName))
+        {
+            attackCountdown -= Time.deltaTime;
+        }
     }
 
     // Called based on animation keyframe events.

@@ -7812,11 +7812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5f637d01744240817752e7f1ecaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PanSpeed: 30
-  PanScreenPadding: 10
-  ScrollSpeed: 5
-  MinY: 10
-  MaxY: 100
 --- !u!1001 &1182358087
 PrefabInstance:
   m_ObjectHideFlags: 0
